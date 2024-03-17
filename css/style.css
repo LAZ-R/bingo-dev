@@ -431,5 +431,10 @@ input:checked + .slider:before {
         width: 100%;
         height: calc(50% - (50dvw));
         /* background-color: magenta; */
+
+        & #addedScore {
+            font-size: 6dvh;
+            font-weight: 1200;
+        }
     }
 }

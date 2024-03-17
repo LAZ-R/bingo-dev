@@ -77,16 +77,23 @@ const onBlocClick = (blocId) => {
     }
 
     if (blocId == 'A1' || blocId == 'B2' || blocId == 'C3' || blocId == 'D4' || blocId == 'E5') {
-
+      if (getDiagNOSETouchedBlocs() == 5) {
+        scoreToAdd += setDiagBingo('NOSE', blocId)
+      }
     }
     if (blocId == 'A5' || blocId == 'B4' || blocId == 'C3' || blocId == 'D2' || blocId == 'E1') {
-      
+      if (getDiagSONETouchedBlocs() == 5) {
+        scoreToAdd += setDiagBingo('SONE', blocId)
+      }
     }
   }
 
   console.log('+ ' + scoreToAdd);
-  totalScore += scoreToAdd;
-  setTotalScore();
+  if (scoreToAdd != 0) {
+    showAddedScore(scoreToAdd);
+    totalScore += scoreToAdd;
+    setTotalScore();
+  }
 }
 window.onBlocClick = onBlocClick;
 
@@ -146,6 +153,36 @@ const getColumnTouchedBlocs = (columnId) => {
       touchedBlocks += 1;
     }
   }
+  return touchedBlocks;
+}
+
+const getDiagNOSETouchedBlocs = () => {
+  let touchedBlocks = 0;
+  let a1 = document.getElementById(`A1`);
+  if (a1.classList.contains('touched')) { touchedBlocks += 1 }
+  let b2 = document.getElementById(`B2`);
+  if (b2.classList.contains('touched')) { touchedBlocks += 1 }
+  let c3 = document.getElementById(`C3`);
+  if (c3.classList.contains('touched')) { touchedBlocks += 1 }
+  let d4 = document.getElementById(`D4`);
+  if (d4.classList.contains('touched')) { touchedBlocks += 1 }
+  let e5 = document.getElementById(`E5`);
+  if (e5.classList.contains('touched')) { touchedBlocks += 1 }
+  return touchedBlocks;
+}
+
+const getDiagSONETouchedBlocs = () => {
+  let touchedBlocks = 0;
+  let a5 = document.getElementById(`A5`);
+  if (a5.classList.contains('touched')) { touchedBlocks += 1 }
+  let b4 = document.getElementById(`B4`);
+  if (b4.classList.contains('touched')) { touchedBlocks += 1 }
+  let c3 = document.getElementById(`C3`);
+  if (c3.classList.contains('touched')) { touchedBlocks += 1 }
+  let d2 = document.getElementById(`D2`);
+  if (d2.classList.contains('touched')) { touchedBlocks += 1 }
+  let e1 = document.getElementById(`E1`);
+  if (e1.classList.contains('touched')) { touchedBlocks += 1 }
   return touchedBlocks;
 }
 
@@ -307,6 +344,91 @@ const setColumnBingo = (columnId, blocId) => {
   return scoreToAdd;
 }
 
+const setDiagBingo = (diag, blocId) => {
+  let scoreToAdd = 0;
+
+  let shouldPassEverythingInX2 = false;
+  let shouldPassEverythingInX3 = false;
+  let shouldPassEverythingInX4 = false;
+
+  let blocs = [];
+  if (diag == "NOSE") {
+    blocs = ['A1', 'B2', 'C3', 'D4', 'E5'];
+  } else { 
+    blocs = ['A5', 'B4', 'C3', 'D2', 'E1'];
+  }
+
+  for (let index = 0; index < 5; index++) {
+    let element = document.getElementById(`${blocs[index]}`);
+    if (element.classList.contains('bingo')) {
+      if (!(element.getAttribute('id') == blocId)) {
+        if ((!element.classList.contains('x2') && document.getElementById(blocId).classList.contains('x2'))
+          || (element.classList.contains('x2') && !(document.getElementById(blocId).classList.contains('x2')))) {
+          shouldPassEverythingInX2 = true;
+        } 
+
+        if ((!element.classList.contains('x3') && document.getElementById(blocId).classList.contains('x3')) 
+        || (element.classList.contains('x3') && !(document.getElementById(blocId).classList.contains('x3')))) {
+          shouldPassEverythingInX3 = true;
+        } 
+
+        if ((!element.classList.contains('x4') && document.getElementById(blocId).classList.contains('x4')) 
+        || (element.classList.contains('x4') && !(document.getElementById(blocId).classList.contains('x4')))) {
+          shouldPassEverythingInX4 = true;
+        }
+      }
+    } else {
+      element.classList.add('bingo');
+      if (element.classList.contains('x2') && !(document.getElementById(blocId).classList.contains('x2'))) {
+        shouldPassEverythingInX2 = true;
+      }
+      if (element.classList.contains('x3') && !(document.getElementById(blocId).classList.contains('x3'))) {
+        shouldPassEverythingInX3 = true;
+      }
+      if (element.classList.contains('x4') && !(document.getElementById(blocId).classList.contains('x4'))) {
+        shouldPassEverythingInX4 = true;
+      }
+    }
+  }
+
+  if (shouldPassEverythingInX2) {
+    for (let index = 0; index < 5; index++) {
+      let element = document.getElementById(`${blocs[index]}`);
+      if (!element.classList.contains('x2')) {
+        element.classList.add('x2');
+      }
+    }
+  }
+  if (shouldPassEverythingInX3) {
+    for (let index = 0; index < 5; index++) {
+      let element = document.getElementById(`${blocs[index]}`);
+      if (!element.classList.contains('x3')) {
+        element.classList.add('x3');
+      }
+    }
+  }
+  if (shouldPassEverythingInX4) {
+    for (let index = 0; index < 5; index++) {
+      let element = document.getElementById(`${blocs[index]}`);
+      if (!element.classList.contains('x4')) {
+        element.classList.add('x4');
+      }
+    }
+  }
+
+  if (shouldPassEverythingInX4) {
+    scoreToAdd += 800;
+  } else if (shouldPassEverythingInX3) {
+    scoreToAdd += 400;
+  } else if (shouldPassEverythingInX2) {
+    scoreToAdd += 200;
+  } else {
+    scoreToAdd += 100;
+  }
+
+  return scoreToAdd;
+}
+
 const setPlayingBoard = (categoryId) => {
   setCurrentBlocsLabels(categoryId);
   const currentCategory = CATEGORIES[categoryId - 1];
@@ -365,7 +487,7 @@ const setPlayingBoard = (categoryId) => {
       </div>
   
       <div class="bottom-board">
-        <span></span>
+        <div class="basic-added-score"><span id="addedScore"></span></div>
       </div>
     `;
     setTimeout(() => {
@@ -375,6 +497,31 @@ const setPlayingBoard = (categoryId) => {
 }
 window.setPlayingBoard = setPlayingBoard;
 
+const showAddedScore = (scoreToAdd) => {
+  let size = '6dvh';
+  if (scoreToAdd < 110) {
+    size = '6dvh'
+  } else if (scoreToAdd >= 110 && scoreToAdd < 220) {
+    size = '8dvh'
+  } else if (scoreToAdd >= 220 && scoreToAdd < 440) {
+    size = '9dvh'
+  } else if (scoreToAdd >= 220 && scoreToAdd < 880) {
+    size = '10dvh'
+  } else if (scoreToAdd >= 880) {
+    size = '12dvh'
+  }
+  document.getElementById('addedScore').style.transition = 'opacity .5s linear';
+  document.getElementById('addedScore').style.fontSize = size;
+  document.getElementById('addedScore').innerHTML = `+ ${scoreToAdd}`;
+  setTimeout(() => {
+    document.getElementById('addedScore').style.opacity = 0;
+  }, 200);
+  setTimeout(() => {
+    document.getElementById('addedScore').style.transition = 'none';
+    document.getElementById('addedScore').innerHTML = ``;
+    document.getElementById('addedScore').style.opacity = 1;
+  }, 700);
+}
 const setTotalScore = () => {
   document.getElementById('totalScore').innerHTML = totalScore;
 }
