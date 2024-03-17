@@ -1,6 +1,6 @@
 import { getRandomIntegerBetween, setHTMLTitle } from "./utils/utils.js";
 import { APP_NAME, APP_VERSION } from "../properties.js";
-import { BLOCS } from "./data.js";
+import { BLOCS, CATEGORIES } from "./data.js";
 
 /* ############################################################################
 --------------------------------- CONSTANTES ---------------------------------
@@ -43,34 +43,50 @@ const CURRENT_BLOCS = [
 
 // INTERACTIONS UTILISATEUR -------------------------------
 const onBlocClick = (blocId) => {
-  console.log(blocId);
+  let scoreToAdd = 0;
+  //console.log(blocId);
   const bloc = document.getElementById(blocId);
-  if (bloc.classList.contains('untouched')) {
-    bloc.classList.replace('untouched', 'touched');
-  } else if (bloc.classList.contains('touched')) {
-    if (!bloc.classList.contains('x2')) {
-      bloc.classList.add('x2');
-    } else {
-      if (!bloc.classList.contains('x3')) {
-        bloc.classList.add('x3');
+  if (!bloc.classList.contains('x4')) {
+    if (bloc.classList.contains('untouched')) {
+      bloc.classList.replace('untouched', 'touched');
+      scoreToAdd += 10;
+    } else if (bloc.classList.contains('touched')) {
+      if (!bloc.classList.contains('x2')) {
+        bloc.classList.add('x2');
+        scoreToAdd += 20;
       } else {
-        if (!bloc.classList.contains('x4')) {
-          bloc.classList.add('x4');
+        if (!bloc.classList.contains('x3')) {
+          bloc.classList.add('x3');
+          scoreToAdd += 40;
+        } else {
+          if (!bloc.classList.contains('x4')) {
+            bloc.classList.add('x4');
+            scoreToAdd += 80;
+          }
         }
       }
     }
-  }
-  const lineId = blocId[0];
-  const columnId = blocId[1];
-  console.log(lineId);
-  console.log(columnId);
+    const lineId = blocId[0];
+    const columnId = blocId[1];
+  
+    if (getLineTouchedBlocs(lineId) == 5) {
+      scoreToAdd += setLineBingo(lineId, blocId);
+    }
+    if (getColumnTouchedBlocs(columnId) == 5) {
+      scoreToAdd += setColumnBingo(columnId, blocId);
+    }
 
-  if (getLineTouchedBlocs(lineId) == 5) {
-    setLineBingo(lineId);
+    if (blocId == 'A1' || blocId == 'B2' || blocId == 'C3' || blocId == 'D4' || blocId == 'E5') {
+
+    }
+    if (blocId == 'A5' || blocId == 'B4' || blocId == 'C3' || blocId == 'D2' || blocId == 'E1') {
+      
+    }
   }
-  if (getColumnTouchedBlocs(columnId) == 5) {
-    setColumnBingo(columnId);
-  }
+
+  console.log('+ ' + scoreToAdd);
+  totalScore += scoreToAdd;
+  setTotalScore();
 }
 window.onBlocClick = onBlocClick;
 
@@ -123,28 +139,177 @@ const getColumnTouchedBlocs = (columnId) => {
   return touchedBlocks;
 }
 
-const setLineBingo = (lineId) => {
+const setLineBingo = (lineId, blocId) => {
+  let scoreToAdd = 0;
+
+  let shouldPassEverythingInX2 = false;
+  let shouldPassEverythingInX3 = false;
+  let shouldPassEverythingInX4 = false;
+
   for (let index = 0; index < 5; index++) {
     let element = document.getElementById(`${lineId}${index + 1}`);
-    element.classList.add('bingo');
+    if (element.classList.contains('bingo')) {
+      if (!(element.getAttribute('id') == blocId)) {
+        if ((!element.classList.contains('x2') && document.getElementById(blocId).classList.contains('x2'))
+          || (element.classList.contains('x2') && !(document.getElementById(blocId).classList.contains('x2')))) {
+          shouldPassEverythingInX2 = true;
+        } 
+
+        if ((!element.classList.contains('x3') && document.getElementById(blocId).classList.contains('x3')) 
+        || (element.classList.contains('x3') && !(document.getElementById(blocId).classList.contains('x3')))) {
+          shouldPassEverythingInX3 = true;
+        } 
+
+        if ((!element.classList.contains('x4') && document.getElementById(blocId).classList.contains('x4')) 
+        || (element.classList.contains('x4') && !(document.getElementById(blocId).classList.contains('x4')))) {
+          shouldPassEverythingInX4 = true;
+        }
+      }
+    } else {
+      element.classList.add('bingo');
+      if (element.classList.contains('x2') && !(document.getElementById(blocId).classList.contains('x2'))) {
+        shouldPassEverythingInX2 = true;
+      }
+      if (element.classList.contains('x3') && !(document.getElementById(blocId).classList.contains('x3'))) {
+        shouldPassEverythingInX3 = true;
+      }
+      if (element.classList.contains('x4') && !(document.getElementById(blocId).classList.contains('x4'))) {
+        shouldPassEverythingInX4 = true;
+      }
+    }
   }
+
+  if (shouldPassEverythingInX2) {
+    for (let index = 0; index < 5; index++) {
+      let element = document.getElementById(`${lineId}${index + 1}`);
+      if (!element.classList.contains('x2')) {
+        element.classList.add('x2');
+      }
+    }
+  }
+  if (shouldPassEverythingInX3) {
+    for (let index = 0; index < 5; index++) {
+      let element = document.getElementById(`${lineId}${index + 1}`);
+      if (!element.classList.contains('x3')) {
+        element.classList.add('x3');
+      }
+    }
+  }
+  if (shouldPassEverythingInX4) {
+    for (let index = 0; index < 5; index++) {
+      let element = document.getElementById(`${lineId}${index + 1}`);
+      if (!element.classList.contains('x4')) {
+        element.classList.add('x4');
+      }
+    }
+  }
+
+  if (shouldPassEverythingInX4) {
+    scoreToAdd += 800;
+  } else if (shouldPassEverythingInX3) {
+    scoreToAdd += 400;
+  } else if (shouldPassEverythingInX2) {
+    scoreToAdd += 200;
+  } else {
+    scoreToAdd += 100;
+  }
+
+  return scoreToAdd;
 }
 
-const setColumnBingo = (columnId) => {
+const setColumnBingo = (columnId, blocId) => {
+  let scoreToAdd = 0;
+  
   const CURRENT_BLOCS = ['A', 'B', 'C', 'D', 'E'];
+
+  let shouldPassEverythingInX2 = false;
+  let shouldPassEverythingInX3 = false;
+  let shouldPassEverythingInX4 = false;
+
   for (let index = 0; index < 5; index++) {
     let element = document.getElementById(`${CURRENT_BLOCS[index]}${columnId}`);
-    element.classList.add('bingo');
+    if (element.classList.contains('bingo')) {
+      if (!(element.getAttribute('id') == blocId)) {
+        if ((!element.classList.contains('x2') && document.getElementById(blocId).classList.contains('x2'))
+          || (element.classList.contains('x2') && !(document.getElementById(blocId).classList.contains('x2')))) {
+          shouldPassEverythingInX2 = true;
+        } 
+
+        if ((!element.classList.contains('x3') && document.getElementById(blocId).classList.contains('x3')) 
+        || (element.classList.contains('x3') && !(document.getElementById(blocId).classList.contains('x3')))) {
+          shouldPassEverythingInX3 = true;
+        } 
+
+        if ((!element.classList.contains('x4') && document.getElementById(blocId).classList.contains('x4')) 
+        || (element.classList.contains('x4') && !(document.getElementById(blocId).classList.contains('x4')))) {
+          shouldPassEverythingInX4 = true;
+        }
+      }
+    } else {
+      element.classList.add('bingo');
+      if (element.classList.contains('x2') && !(document.getElementById(blocId).classList.contains('x2'))) {
+        shouldPassEverythingInX2 = true;
+      }
+      if (element.classList.contains('x3') && !(document.getElementById(blocId).classList.contains('x3'))) {
+        shouldPassEverythingInX3 = true;
+      }
+      if (element.classList.contains('x4') && !(document.getElementById(blocId).classList.contains('x4'))) {
+        shouldPassEverythingInX4 = true;
+      }
+    }
   }
+
+  if (shouldPassEverythingInX2) {
+    for (let index = 0; index < 5; index++) {
+      let element = document.getElementById(`${CURRENT_BLOCS[index]}${columnId}`);
+      if (!element.classList.contains('x2')) {
+        element.classList.add('x2');
+      }
+    }
+  }
+  if (shouldPassEverythingInX3) {
+    for (let index = 0; index < 5; index++) {
+      let element = document.getElementById(`${CURRENT_BLOCS[index]}${columnId}`);
+      if (!element.classList.contains('x3')) {
+        element.classList.add('x3');
+      }
+    }
+  }
+  if (shouldPassEverythingInX4) {
+    for (let index = 0; index < 5; index++) {
+      let element = document.getElementById(`${CURRENT_BLOCS[index]}${columnId}`);
+      if (!element.classList.contains('x4')) {
+        element.classList.add('x4');
+      }
+    }
+  }
+
+  if (shouldPassEverythingInX4) {
+    scoreToAdd += 800;
+  } else if (shouldPassEverythingInX3) {
+    scoreToAdd += 400;
+  } else if (shouldPassEverythingInX2) {
+    scoreToAdd += 200;
+  } else {
+    scoreToAdd += 100;
+  }
+
+  return scoreToAdd;
 }
 
 const setPlayingBoard = (categoryId) => {
   setCurrentBlocsLabels(categoryId);
+  const currentCategory = CATEGORIES[categoryId - 1];
 
   const main = document.getElementById('main');
   main.innerHTML = ``;
 
   main.innerHTML = `
+    <div class="top-board">
+      <span id="categoryLabel">${currentCategory.label}</span>
+      <span><span id="totalScore">0</span>pts</span>
+    </div>
+
     <div class="playing-board">
       <div id="A" class="playing-board-line">
         <button id="${CURRENT_BLOCS[0].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[0].id}')" style="font-size: ${CURRENT_BLOCS[0].fontSize};">${CURRENT_BLOCS[0].label}</button>
@@ -186,7 +351,15 @@ const setPlayingBoard = (categoryId) => {
         <button id="${CURRENT_BLOCS[24].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[24].id}')" style="font-size: ${CURRENT_BLOCS[24].fontSize};">${CURRENT_BLOCS[24].label}</button>
       </div>
     </div>
+
+    <div class="bottom-board">
+      <span></span>
+    </div>
   `;
+}
+
+const setTotalScore = () => {
+  document.getElementById('totalScore').innerHTML = totalScore;
 }
 
 /* ############################################################################
@@ -205,4 +378,5 @@ main.innerHTML = `
   <span>Coucou</span>
 `;
 
+let totalScore = 0;
 setPlayingBoard(1);

@@ -275,6 +275,7 @@ input:checked + .slider:before {
 }
 
 .header {
+    z-index: 200;
     position: relative;
     flex-direction: column;
     gap: .5dvh;
@@ -300,12 +301,39 @@ input:checked + .slider:before {
         font-family: "gendarmerie";
         font-size: 5dvh;
         padding: 0 .5dvh;
+        line-height: 5dvh;
     }
 }
 
 .main {
-    justify-content: center;
+    position: relative;
+    z-index: 100;
+    justify-content: flex-start;
     align-items: center;
+    --board-height: 10%;
+
+    .top-board {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: calc(50% - (50dvw));
+        gap: 5%;
+
+        & > span:first-of-type {
+            font-family: "gendarmerie";
+            text-transform: uppercase;
+            font-size: 3dvh;
+        }
+        & > span:last-of-type {
+            font-size: 3dvh;
+
+            & > span {
+                font-size: 6dvh;
+            }
+        }
+    }
 
     .playing-board {
         display: flex;
@@ -360,5 +388,15 @@ input:checked + .slider:before {
                 }
             }
         }
+    }
+
+    .bottom-board {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: calc(50% - (50dvw));
+        /* background-color: magenta; */
     }
 }
