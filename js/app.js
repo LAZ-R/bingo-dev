@@ -91,6 +91,16 @@ const onBlocClick = (blocId) => {
 window.onBlocClick = onBlocClick;
 
 // GÉNÉRATION DOM -----------------------------------------
+
+const getCategoriesButtons = () => {
+  let txt = `<div class="buttons-container">`;
+  CATEGORIES.forEach(category => {
+    txt += `<button onclick="setPlayingBoard(${category.id})" class="category-button" style="background-image: url('${category.img}');"><span>${category.label}</span></button>`;
+  });
+  txt += `</div>`;
+  return txt;
+}
+
 const getRandomBlocsByCategoryId = (categoryId) => {
   //console.table(BLOCS);
   let eligibleBlocs = BLOCS.filter((element) => element.categories.includes(categoryId));
@@ -302,61 +312,68 @@ const setPlayingBoard = (categoryId) => {
   const currentCategory = CATEGORIES[categoryId - 1];
 
   const main = document.getElementById('main');
-  main.innerHTML = ``;
-
-  main.innerHTML = `
-    <div class="top-board">
-      <span id="categoryLabel">${currentCategory.label}</span>
-      <span><span id="totalScore">0</span>pts</span>
-    </div>
-
-    <div class="playing-board">
-      <div id="A" class="playing-board-line">
-        <button id="${CURRENT_BLOCS[0].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[0].id}')" style="font-size: ${CURRENT_BLOCS[0].fontSize};">${CURRENT_BLOCS[0].label}</button>
-        <button id="${CURRENT_BLOCS[1].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[1].id}')" style="font-size: ${CURRENT_BLOCS[1].fontSize};">${CURRENT_BLOCS[1].label}</button>
-        <button id="${CURRENT_BLOCS[2].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[2].id}')" style="font-size: ${CURRENT_BLOCS[2].fontSize};">${CURRENT_BLOCS[2].label}</button>
-        <button id="${CURRENT_BLOCS[3].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[3].id}')" style="font-size: ${CURRENT_BLOCS[3].fontSize};">${CURRENT_BLOCS[3].label}</button>
-        <button id="${CURRENT_BLOCS[4].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[4].id}')" style="font-size: ${CURRENT_BLOCS[4].fontSize};">${CURRENT_BLOCS[4].label}</button>
+  main.style.opacity = 0;
+  setTimeout(() => {
+    main.innerHTML = ``;
+  
+    main.innerHTML = `
+      <div class="top-board">
+        <span id="categoryLabel">${currentCategory.label}</span>
+        <span><span id="totalScore">0</span>pts</span>
       </div>
-
-      <div id="B" class="playing-board-line">
-        <button id="${CURRENT_BLOCS[5].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[5].id}')" style="font-size: ${CURRENT_BLOCS[5].fontSize};">${CURRENT_BLOCS[5].label}</button>
-        <button id="${CURRENT_BLOCS[6].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[6].id}')" style="font-size: ${CURRENT_BLOCS[6].fontSize};">${CURRENT_BLOCS[6].label}</button>
-        <button id="${CURRENT_BLOCS[7].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[7].id}')" style="font-size: ${CURRENT_BLOCS[7].fontSize};">${CURRENT_BLOCS[7].label}</button>
-        <button id="${CURRENT_BLOCS[8].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[8].id}')" style="font-size: ${CURRENT_BLOCS[8].fontSize};">${CURRENT_BLOCS[8].label}</button>
-        <button id="${CURRENT_BLOCS[9].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[9].id}')" style="font-size: ${CURRENT_BLOCS[9].fontSize};">${CURRENT_BLOCS[9].label}</button>
+  
+      <div class="playing-board">
+        <div id="A" class="playing-board-line">
+          <button id="${CURRENT_BLOCS[0].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[0].id}')" style="font-size: ${CURRENT_BLOCS[0].fontSize};">${CURRENT_BLOCS[0].label}</button>
+          <button id="${CURRENT_BLOCS[1].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[1].id}')" style="font-size: ${CURRENT_BLOCS[1].fontSize};">${CURRENT_BLOCS[1].label}</button>
+          <button id="${CURRENT_BLOCS[2].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[2].id}')" style="font-size: ${CURRENT_BLOCS[2].fontSize};">${CURRENT_BLOCS[2].label}</button>
+          <button id="${CURRENT_BLOCS[3].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[3].id}')" style="font-size: ${CURRENT_BLOCS[3].fontSize};">${CURRENT_BLOCS[3].label}</button>
+          <button id="${CURRENT_BLOCS[4].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[4].id}')" style="font-size: ${CURRENT_BLOCS[4].fontSize};">${CURRENT_BLOCS[4].label}</button>
+        </div>
+  
+        <div id="B" class="playing-board-line">
+          <button id="${CURRENT_BLOCS[5].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[5].id}')" style="font-size: ${CURRENT_BLOCS[5].fontSize};">${CURRENT_BLOCS[5].label}</button>
+          <button id="${CURRENT_BLOCS[6].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[6].id}')" style="font-size: ${CURRENT_BLOCS[6].fontSize};">${CURRENT_BLOCS[6].label}</button>
+          <button id="${CURRENT_BLOCS[7].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[7].id}')" style="font-size: ${CURRENT_BLOCS[7].fontSize};">${CURRENT_BLOCS[7].label}</button>
+          <button id="${CURRENT_BLOCS[8].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[8].id}')" style="font-size: ${CURRENT_BLOCS[8].fontSize};">${CURRENT_BLOCS[8].label}</button>
+          <button id="${CURRENT_BLOCS[9].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[9].id}')" style="font-size: ${CURRENT_BLOCS[9].fontSize};">${CURRENT_BLOCS[9].label}</button>
+        </div>
+  
+        <div id="C" class="playing-board-line">
+          <button id="${CURRENT_BLOCS[10].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[10].id}')" style="font-size: ${CURRENT_BLOCS[10].fontSize};">${CURRENT_BLOCS[10].label}</button>
+          <button id="${CURRENT_BLOCS[11].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[11].id}')" style="font-size: ${CURRENT_BLOCS[11].fontSize};">${CURRENT_BLOCS[11].label}</button>
+          <button id="${CURRENT_BLOCS[12].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[12].id}')" style="font-size: ${CURRENT_BLOCS[12].fontSize};">${CURRENT_BLOCS[12].label}</button>
+          <button id="${CURRENT_BLOCS[13].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[13].id}')" style="font-size: ${CURRENT_BLOCS[13].fontSize};">${CURRENT_BLOCS[13].label}</button>
+          <button id="${CURRENT_BLOCS[14].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[14].id}')" style="font-size: ${CURRENT_BLOCS[14].fontSize};">${CURRENT_BLOCS[14].label}</button>
+        </div>
+  
+        <div id="D" class="playing-board-line">
+          <button id="${CURRENT_BLOCS[15].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[15].id}')" style="font-size: ${CURRENT_BLOCS[15].fontSize};">${CURRENT_BLOCS[15].label}</button>
+          <button id="${CURRENT_BLOCS[16].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[16].id}')" style="font-size: ${CURRENT_BLOCS[16].fontSize};">${CURRENT_BLOCS[16].label}</button>
+          <button id="${CURRENT_BLOCS[17].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[17].id}')" style="font-size: ${CURRENT_BLOCS[17].fontSize};">${CURRENT_BLOCS[17].label}</button>
+          <button id="${CURRENT_BLOCS[18].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[18].id}')" style="font-size: ${CURRENT_BLOCS[18].fontSize};">${CURRENT_BLOCS[18].label}</button>
+          <button id="${CURRENT_BLOCS[19].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[19].id}')" style="font-size: ${CURRENT_BLOCS[19].fontSize};">${CURRENT_BLOCS[19].label}</button>
+        </div>
+  
+        <div id="E" class="playing-board-line">
+          <button id="${CURRENT_BLOCS[20].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[20].id}')" style="font-size: ${CURRENT_BLOCS[20].fontSize};">${CURRENT_BLOCS[20].label}</button>
+          <button id="${CURRENT_BLOCS[21].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[21].id}')" style="font-size: ${CURRENT_BLOCS[21].fontSize};">${CURRENT_BLOCS[21].label}</button>
+          <button id="${CURRENT_BLOCS[22].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[22].id}')" style="font-size: ${CURRENT_BLOCS[22].fontSize};">${CURRENT_BLOCS[22].label}</button>
+          <button id="${CURRENT_BLOCS[23].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[23].id}')" style="font-size: ${CURRENT_BLOCS[23].fontSize};">${CURRENT_BLOCS[23].label}</button>
+          <button id="${CURRENT_BLOCS[24].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[24].id}')" style="font-size: ${CURRENT_BLOCS[24].fontSize};">${CURRENT_BLOCS[24].label}</button>
+        </div>
       </div>
-
-      <div id="C" class="playing-board-line">
-        <button id="${CURRENT_BLOCS[10].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[10].id}')" style="font-size: ${CURRENT_BLOCS[10].fontSize};">${CURRENT_BLOCS[10].label}</button>
-        <button id="${CURRENT_BLOCS[11].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[11].id}')" style="font-size: ${CURRENT_BLOCS[11].fontSize};">${CURRENT_BLOCS[11].label}</button>
-        <button id="${CURRENT_BLOCS[12].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[12].id}')" style="font-size: ${CURRENT_BLOCS[12].fontSize};">${CURRENT_BLOCS[12].label}</button>
-        <button id="${CURRENT_BLOCS[13].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[13].id}')" style="font-size: ${CURRENT_BLOCS[13].fontSize};">${CURRENT_BLOCS[13].label}</button>
-        <button id="${CURRENT_BLOCS[14].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[14].id}')" style="font-size: ${CURRENT_BLOCS[14].fontSize};">${CURRENT_BLOCS[14].label}</button>
+  
+      <div class="bottom-board">
+        <span></span>
       </div>
-
-      <div id="D" class="playing-board-line">
-        <button id="${CURRENT_BLOCS[15].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[15].id}')" style="font-size: ${CURRENT_BLOCS[15].fontSize};">${CURRENT_BLOCS[15].label}</button>
-        <button id="${CURRENT_BLOCS[16].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[16].id}')" style="font-size: ${CURRENT_BLOCS[16].fontSize};">${CURRENT_BLOCS[16].label}</button>
-        <button id="${CURRENT_BLOCS[17].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[17].id}')" style="font-size: ${CURRENT_BLOCS[17].fontSize};">${CURRENT_BLOCS[17].label}</button>
-        <button id="${CURRENT_BLOCS[18].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[18].id}')" style="font-size: ${CURRENT_BLOCS[18].fontSize};">${CURRENT_BLOCS[18].label}</button>
-        <button id="${CURRENT_BLOCS[19].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[19].id}')" style="font-size: ${CURRENT_BLOCS[19].fontSize};">${CURRENT_BLOCS[19].label}</button>
-      </div>
-
-      <div id="E" class="playing-board-line">
-        <button id="${CURRENT_BLOCS[20].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[20].id}')" style="font-size: ${CURRENT_BLOCS[20].fontSize};">${CURRENT_BLOCS[20].label}</button>
-        <button id="${CURRENT_BLOCS[21].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[21].id}')" style="font-size: ${CURRENT_BLOCS[21].fontSize};">${CURRENT_BLOCS[21].label}</button>
-        <button id="${CURRENT_BLOCS[22].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[22].id}')" style="font-size: ${CURRENT_BLOCS[22].fontSize};">${CURRENT_BLOCS[22].label}</button>
-        <button id="${CURRENT_BLOCS[23].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[23].id}')" style="font-size: ${CURRENT_BLOCS[23].fontSize};">${CURRENT_BLOCS[23].label}</button>
-        <button id="${CURRENT_BLOCS[24].id}" class="bloc untouched" onclick="onBlocClick('${CURRENT_BLOCS[24].id}')" style="font-size: ${CURRENT_BLOCS[24].fontSize};">${CURRENT_BLOCS[24].label}</button>
-      </div>
-    </div>
-
-    <div class="bottom-board">
-      <span></span>
-    </div>
-  `;
+    `;
+    setTimeout(() => {
+      main.style.opacity = 1;
+    }, 100);
+  }, 200);
 }
+window.setPlayingBoard = setPlayingBoard;
 
 const setTotalScore = () => {
   document.getElementById('totalScore').innerHTML = totalScore;
@@ -372,11 +389,11 @@ const setTotalScore = () => {
 // Manuelle -----------------------------------------------
 
 setHTMLTitle(APP_NAME);
-
+const year = new Date().getFullYear();
 const main = document.getElementById('main');
 main.innerHTML = `
-  <span>Coucou</span>
+  ${getCategoriesButtons()}
+  <div style="margin-bottom: 1dvh;">&copy ${year} <a href="https://laz-r.github.io">laz_R</a> - v${APP_VERSION}</div>
 `;
 
 let totalScore = 0;
-setPlayingBoard(1);

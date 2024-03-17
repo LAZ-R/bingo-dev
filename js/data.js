@@ -1,7 +1,7 @@
 export const CATEGORIES = [
-  { id: 1, label: `Surveillance routière` },
-  { id: 2, label: `Drogues & banlieues` },
-  { id: 3, label: `Délinquance estivale` },
+  { id: 1, label: `Surveillance routière`, img: `./medias/images/categ-1.png` },
+  { id: 2, label: `Drogues & banlieues`, img: `./medias/images/categ-2-2.png` },
+  { id: 3, label: `Délinquance estivale`, img: `./medias/images/categ-3.png` },
 ];
 
 export const BLOCS = [

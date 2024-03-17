@@ -311,6 +311,39 @@ input:checked + .slider:before {
     justify-content: flex-start;
     align-items: center;
     --board-height: 10%;
+    transition: opacity .2s linear;
+
+    .buttons-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 var(--horizontal-padding);
+        width: 100%;
+        height: 100%;
+        gap: 5dvh;
+
+        .category-button {
+            justify-content: center;
+            width: 100%;
+            border-radius: 2dvw;
+            padding: 0;
+            box-shadow: var(--box-shadow);
+            background-position: center;
+            background-size: cover;
+            overflow: hidden;
+            
+            & span {
+                color: black;
+                font-family: "gendarmerie";
+                text-transform: uppercase;
+                font-size: 7dvw;
+                background-color: #ffffff98;
+                padding: 3dvh 0;
+                width: 100%;
+            }
+        }
+    }
 
     .top-board {
         display: flex;
