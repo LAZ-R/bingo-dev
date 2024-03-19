@@ -1,4 +1,4 @@
-import { getRandomIntegerBetween, setHTMLTitle } from "./utils/utils.js";
+import { getRandomIntegerBetween, requestWakeLock, setHTMLTitle } from "./utils/utils.js";
 import { APP_NAME, APP_VERSION } from "../properties.js";
 import { BLOCS, CATEGORIES } from "./data.js";
 
@@ -531,7 +531,7 @@ const setTotalScore = () => {
 ############################################################################ */
 
 // Auto ---------------------------------------------------
-
+await requestWakeLock();
 
 // Manuelle -----------------------------------------------
 

@@ -73,42 +73,42 @@ export const BLOCS = [
   {
     label: `Crainte de caillassage`,
     fontSize: `3.2dvw`,
-    categories: [ 1, 2, 3 ]
+    categories: [ 2, 3 ]
   },
   {
-    label: `"... prennent tous les risques"`,
+    label: `"Prennent tous les risques"`,
     fontSize: `3.2dvw`,
     categories: [ 1, 2, 3 ]
   },
   {
     label: `"On se rend pas compte de la vitesse avec cet engin"`,
     fontSize: `2.4dvw`,
-    categories: [ 1, 2, 3 ]
+    categories: [ 1 ]
   },
   {
     label: `Souffle mal dans l'appareil`,
     fontSize: `3.8dvw`,
-    categories: [ 1, 2, 3 ]
+    categories: [ 1, 3 ]
   },
   {
     label: `"On peut pas s'arranger ?"`,
     fontSize: `3.2dvw`,
-    categories: [ 1, 2, 3 ]
+    categories: [ 1, 3 ]
   },
-  /* {
-    label: `Gear-up shot`,
-    fontSize: `3.6dvw`,
-    categories: [ 1, 2, 3 ]
-  }, */
+  //{
+    //label: `Gear-up shot`,
+    //fontSize: `3.6dvw`,
+    //categories: [ 1, 2, 3 ]
+  //},
   {
     label: `Victime torse nu`,
     fontSize: `4dvw`,
-    categories: [ 1, 2, 3 ]
+    categories: [ 3 ]
   },
   {
     label: `Querelle de voisinnage`,
     fontSize: `3.2dvw`,
-    categories: [ 1, 2, 3 ]
+    categories: [ 2, 3 ]
   },
   {
     label: `"Record"`,
@@ -118,16 +118,16 @@ export const BLOCS = [
   {
     label: `"Fou du volant"`,
     fontSize: `4dvw`,
-    categories: [ 1, 2, 3 ]
+    categories: [ 1 ]
   },
   {
     label: `"Grosse cylindrée / bolide"`,
     fontSize: `3.8dvw`,
-    categories: [ 1, 2, 3 ]
+    categories: [ 1 ]
   },
   {
-    label: `"Le plus ... de France"`,
-    fontSize: `3.6dvw`,
+    label: `"Le / la plus ... de France"`,
+    fontSize: `3.4dvw`,
     categories: [ 1, 2, 3 ]
   },
   {
@@ -138,7 +138,7 @@ export const BLOCS = [
   {
     label: `06h00, heure légale des interpellations`,
     fontSize: `2.6dvw`,
-    categories: [ 1, 2, 3 ]
+    categories: [ 2 ]
   },
   {
     label: `L'agent mâche un chewing-gum`,
@@ -153,7 +153,107 @@ export const BLOCS = [
   {
     label: `"Zone de non-droit"`,
     fontSize: `3.8dvw`,
+    categories: [ 2 ]
+  },
+  {
+    label: `"En alerte maximum"`,
+    fontSize: `3.4dvw`,
+    categories: [ 1, 2, 3 ]
+  },
+  {
+    label: `"Chauffard"`,
+    fontSize: `3.2dvw`,
+    categories: [ 1 ]
+  },
+  {
+    label: `"Les autres usagers"`,
+    fontSize: `3.8dvw`,
+    categories: [ 1 ]
+  },
+  {
+    label: `"Chassé-croisé"`,
+    fontSize: `3.8dvw`,
+    categories: [ 1, 3 ]
+  },
+  {
+    label: `Phillipe`,
+    fontSize: `4dvw`,
+    categories: [ 1, 2, 3 ]
+  },
+  {
+    label: `"Le risque de sur-accident"`,
+    fontSize: `3.2dvw`,
+    categories: [ 1 ]
+  },
+  {
+    label: `"Au mépris du danger"`,
+    fontSize: `3.2dvw`,
+    categories: [ 1, 2, 3 ]
+  },
+  {
+    label: `"Dans le collimateur"`,
+    fontSize: `3dvw`,
+    categories: [ 1, 2, 3 ]
+  },
+  {
+    label: `Grand excès de vitesse`,
+    fontSize: `3.6dvw`,
+    categories: [ 1 ]
+  },
+  {
+    label: `"Pour ne pas éveiller les soupçons"`,
+    fontSize: `3.2dvw`,
+    categories: [ 1, 2, 3 ]
+  },
+  {
+    label: `"Sur le qui-vive"`,
+    fontSize: `4dvw`,
+    categories: [ 1, 2, 3 ]
+  },
+  {
+    label: `"Les Anges gardiens de l'autoroute"`,
+    fontSize: `3.2dvw`,
+    categories: [ 1, 3 ]
+  },
+  {
+    label: `"N'en est pas à son coup d'essai"`,
+    fontSize: `3.2dvw`,
     categories: [ 1, 2, 3 ]
   },
 ];
-console.log('Nb de blocs possibles : ' + BLOCS.length);
+
+let stats = {
+  total: BLOCS.length,
+  securite_routiere: BLOCS.filter((element) => element.categories.includes(1)).length,
+  only_securite_routiere: BLOCS.filter((element) => element.categories.includes(1) && !element.categories.includes(2) && !element.categories.includes(3)).length,
+  drogues_et_banlieues: BLOCS.filter((element) => element.categories.includes(2)).length,
+  only_drogues_et_banlieues: BLOCS.filter((element) => element.categories.includes(2) && !element.categories.includes(1) && !element.categories.includes(3)).length,
+  delinquance_estivale: BLOCS.filter((element) => element.categories.includes(3)).length,
+  only_delinquance_estivale: BLOCS.filter((element) => element.categories.includes(3) && !element.categories.includes(2) && !element.categories.includes(1)).length,
+}
+console.log(`
+=======================================
+- - - - - - - - BINGO - - - - - - - - -
+=======================================
+
+Total de cases différentes: ${stats.total}
+
+- - - - - - - - - - - - - - - - - - - -
+SURVEILLANCE ROUTIÈRE
+- - - - - - - - - - - - - - - - - - - -
+${stats.securite_routiere} cases disponibles
+[dont ${stats.only_securite_routiere} case(s) exclusive(s)]
+
+- - - - - - - - - - - - - - - - - - - -
+DROGUES & BANLIEUES
+- - - - - - - - - - - - - - - - - - - -
+${stats.drogues_et_banlieues} cases disponibles
+[dont ${stats.only_drogues_et_banlieues} case(s) exclusive(s)]
+
+- - - - - - - - - - - - - - - - - - - -
+DÉLINQUANCE ESTIVALE
+- - - - - - - - - - - - - - - - - - - -
+${stats.delinquance_estivale} cases disponibles
+[dont ${stats.only_delinquance_estivale} case(s) exclusive(s)]
+`);
+//console.table(stats);
