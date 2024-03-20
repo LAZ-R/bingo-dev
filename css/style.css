@@ -339,9 +339,10 @@ input:checked + .slider:before {
             
             & span {
                 color: black;
-                font-family: "gendarmerie";
+                /* font-family: "gendarmerie"; */
                 text-transform: uppercase;
-                font-size: 7dvw;
+                font-size: 6dvw;
+                font-weight: 600;
                 background-color: #ffffff98;
                 padding: 3dvh 0;
                 width: 100%;

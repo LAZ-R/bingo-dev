@@ -26,7 +26,7 @@ export const BLOCS = [
     categories: [ 1, 2, 3 ]
   },
   {
-    label: `"Le chat et la souris"`,
+    label: `"Au chat et à la souris"`,
     fontSize: `3.8dvw`,
     categories: [ 1, 2, 3 ]
   },
@@ -76,8 +76,8 @@ export const BLOCS = [
     categories: [ 2, 3 ]
   },
   {
-    label: `"Prennent tous les risques"`,
-    fontSize: `3.2dvw`,
+    label: `"Tous les risques"`,
+    fontSize: `3.4dvw`,
     categories: [ 1, 2, 3 ]
   },
   {
@@ -91,7 +91,7 @@ export const BLOCS = [
     categories: [ 1, 3 ]
   },
   {
-    label: `"On peut pas s'arranger ?"`,
+    label: `Tentative de négociation`,
     fontSize: `3.2dvw`,
     categories: [ 1, 3 ]
   },
@@ -127,7 +127,7 @@ export const BLOCS = [
   },
   {
     label: `"Le / la plus ... de France"`,
-    fontSize: `3.4dvw`,
+    fontSize: `3dvw`,
     categories: [ 1, 2, 3 ]
   },
   {
@@ -197,7 +197,7 @@ export const BLOCS = [
   },
   {
     label: `Grand excès de vitesse`,
-    fontSize: `3.6dvw`,
+    fontSize: `3.4dvw`,
     categories: [ 1 ]
   },
   {
@@ -207,16 +207,31 @@ export const BLOCS = [
   },
   {
     label: `"Sur le qui-vive"`,
-    fontSize: `4dvw`,
+    fontSize: `3.6dvw`,
     categories: [ 1, 2, 3 ]
   },
   {
     label: `"Les Anges gardiens de l'autoroute"`,
-    fontSize: `3.2dvw`,
+    fontSize: `3dvw`,
     categories: [ 1, 3 ]
   },
   {
     label: `"N'en est pas à son coup d'essai"`,
+    fontSize: `3.2dvw`,
+    categories: [ 1, 2, 3 ]
+  },
+  {
+    label: `"Unité d'élite"`,
+    fontSize: `3.8dvw`,
+    categories: [ 2 ]
+  },
+  {
+    label: `"Bande organisée"`,
+    fontSize: `3.2dvw`,
+    categories: [ 2, 3 ]
+  },
+  {
+    label: `"Voiture banalisée"`,
     fontSize: `3.2dvw`,
     categories: [ 1, 2, 3 ]
   },
