@@ -1,6 +1,6 @@
 export const CATEGORIES = [
   { id: 1, label: `Surveillance routière`, img: `./medias/images/categ-1.png` },
-  { id: 2, label: `Drogues & banlieues`, img: `./medias/images/categ-2-2.png` },
+  { id: 2, label: `Criminalité urbaine`, img: `./medias/images/categ-2-2.png` },
   { id: 3, label: `Délinquance estivale`, img: `./medias/images/categ-3.png` },
 ];
 
@@ -27,7 +27,7 @@ export const BLOCS = [
   },
   {
     label: `"Au chat et à la souris"`,
-    fontSize: `3.8dvw`,
+    fontSize: `3.2dvw`,
     categories: [ 1, 2, 3 ]
   },
   {
@@ -235,14 +235,19 @@ export const BLOCS = [
     fontSize: `3.2dvw`,
     categories: [ 1, 2, 3 ]
   },
+  {
+    label: `"Mais ils ne vont pas attendre longtemps"`,
+    fontSize: `2.6dvw`,
+    categories: [ 1, 2, 3 ]
+  },
 ];
 
 let stats = {
   total: BLOCS.length,
   securite_routiere: BLOCS.filter((element) => element.categories.includes(1)).length,
   only_securite_routiere: BLOCS.filter((element) => element.categories.includes(1) && !element.categories.includes(2) && !element.categories.includes(3)).length,
-  drogues_et_banlieues: BLOCS.filter((element) => element.categories.includes(2)).length,
-  only_drogues_et_banlieues: BLOCS.filter((element) => element.categories.includes(2) && !element.categories.includes(1) && !element.categories.includes(3)).length,
+  criminalite_urbaine: BLOCS.filter((element) => element.categories.includes(2)).length,
+  only_criminalite_urbaine: BLOCS.filter((element) => element.categories.includes(2) && !element.categories.includes(1) && !element.categories.includes(3)).length,
   delinquance_estivale: BLOCS.filter((element) => element.categories.includes(3)).length,
   only_delinquance_estivale: BLOCS.filter((element) => element.categories.includes(3) && !element.categories.includes(2) && !element.categories.includes(1)).length,
 }
@@ -260,10 +265,10 @@ ${stats.securite_routiere} cases disponibles
 [dont ${stats.only_securite_routiere} case(s) exclusive(s)]
 
 - - - - - - - - - - - - - - - - - - - -
-DROGUES & BANLIEUES
+CRIMINALITÉ URBAINE
 - - - - - - - - - - - - - - - - - - - -
-${stats.drogues_et_banlieues} cases disponibles
-[dont ${stats.only_drogues_et_banlieues} case(s) exclusive(s)]
+${stats.criminalite_urbaine} cases disponibles
+[dont ${stats.only_criminalite_urbaine} case(s) exclusive(s)]
 
 - - - - - - - - - - - - - - - - - - - -
 DÉLINQUANCE ESTIVALE
